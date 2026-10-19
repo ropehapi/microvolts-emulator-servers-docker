@@ -1,0 +1,26 @@
+-- MariaDB table names are case-sensitive on Linux. The emulator queries these
+-- tables with PascalCase names while the upstream dump creates lowercase names.
+RENAME TABLE
+  blockedplayers TO BlockedPlayers,
+  capsuleevents TO CapsuleEvents,
+  chatlogs TO ChatLogs,
+  cheatflags TO CheatFlags,
+  clans TO Clans,
+  eventcommands TO EventCommands,
+  eventmissions TO EventMissions,
+  eventmissionsinfo TO EventMissionsInfo,
+  eventsmaps TO EventsMaps,
+  eventsmodes TO EventsModes,
+  expmpbonusevents TO ExpMpBonusEvents,
+  friendlist TO Friendlist,
+  gamelogs TO GameLogs,
+  giftbox TO Giftbox,
+  itemlogs TO ItemLogs,
+  mailbox TO Mailbox,
+  monthlyrewards TO MonthlyRewards,
+  pendingfriendrequests TO PendingFriendRequests,
+  tradeevents TO TradeEvents,
+  userachievements TO UserAchievements,
+  useritems TO UserItems,
+  users TO Users,
+  weeklyrewards TO WeeklyRewards;

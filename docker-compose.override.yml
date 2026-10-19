@@ -1,0 +1,36 @@
+services:
+  db:
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MY_DB_PASSWORD:?Set MY_DB_PASSWORD before running docker compose}
+      MYSQL_DATABASE: microvolts-db
+      MYSQL_USER: microvolts
+      MYSQL_PASSWORD: ${MY_DB_PASSWORD:?Set MY_DB_PASSWORD before running docker compose}
+    ports:
+      - "3305:3306"
+
+  auth-server:
+    environment:
+      - MY_DB_PASSWORD
+      - MV_DB_PASSWORD_ENV=MY_DB_PASSWORD
+      - MV_DB_HOST=db
+      - MV_DB_PORT=3306
+      - MV_DB_NAME=microvolts-db
+      - MV_DB_USER=microvolts
+
+  main-server:
+    environment:
+      - MY_DB_PASSWORD
+      - MV_DB_PASSWORD_ENV=MY_DB_PASSWORD
+      - MV_DB_HOST=db
+      - MV_DB_PORT=3306
+      - MV_DB_NAME=microvolts-db
+      - MV_DB_USER=microvolts
+
+  cast-server:
+    environment:
+      - MY_DB_PASSWORD
+      - MV_DB_PASSWORD_ENV=MY_DB_PASSWORD
+      - MV_DB_HOST=db
+      - MV_DB_PORT=3306
+      - MV_DB_NAME=microvolts-db
+      - MV_DB_USER=microvolts

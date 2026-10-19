@@ -68,17 +68,19 @@ echo "  DB User: $DB_USER"
 echo "  DB Password Env: $DB_PASSWORD_ENV"
 echo ""
 
+# Make Compose stop with a clear error instead of starting MariaDB with an
+# empty password when the selected environment variable was not exported.
+PASSWORD_REF="\${${DB_PASSWORD_ENV}:?Set ${DB_PASSWORD_ENV} before running docker compose}"
+
 # Create docker-compose.override.yml
 cat > "$OVERRIDE_FILE" << EOF
-version: '3.8'
-
 services:
   db:
     environment:
-      MYSQL_ROOT_PASSWORD: \${$DB_PASSWORD_ENV}
+      MYSQL_ROOT_PASSWORD: $PASSWORD_REF
       MYSQL_DATABASE: $DB_NAME
       MYSQL_USER: $DB_USER
-      MYSQL_PASSWORD: \${$DB_PASSWORD_ENV}
+      MYSQL_PASSWORD: $PASSWORD_REF
     ports:
       - "$DB_HOST_PORT:3306"
 
