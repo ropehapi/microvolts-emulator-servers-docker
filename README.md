@@ -16,15 +16,14 @@ ssh -T git@github.com
 git clone git@github.com:ropehapi/microvolts-emulator-servers-docker.git
 cd microvolts-emulator-servers-docker
 
-# Create the local environment file and define the variables
-cp .env.example .env
+# Create .env and configure Docker Compose
+make setup
+# Review the generated .env file and replace its example values
 
-./setup.sh --db-password-env MY_DB_PASSWORD
+# Build and start the servers (the SSH agent is forwarded automatically)
+make run
 
-# Preserve the SSH agent because the build clones the private server repository
-sudo --preserve-env=SSH_AUTH_SOCK docker compose up --build -d
-
-sudo docker compose ps
+make status
 ```
 
 That's it! Your Microvolts Emulator is now running with:
@@ -40,7 +39,24 @@ That's it! Your Microvolts Emulator is now running with:
 - **4GB+ RAM** available
 - **Git** for repository access
 - **OpenSSH client** and an SSH key authorized on GitHub
+- **Make**
 - Access to the private `ropehapi/microvolts-emulator-servers` repository
+
+## Make commands
+
+Run `make help` to list the available commands. The most common ones are:
+
+```bash
+make setup    # Prepare .env and the Compose override
+make run      # Build and start all services
+make logs     # Follow service logs
+make status   # Show service status
+make restart  # Restart all services
+make stop     # Stop all services
+```
+
+The commands use `sudo` by default. If your user can access Docker directly,
+run them with an empty `SUDO` variable, for example: `make run SUDO=`.
 
 ## Support & Community
 

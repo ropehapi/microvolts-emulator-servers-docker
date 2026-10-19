@@ -64,6 +64,8 @@ RUN apt-get update && apt-get install -y \
     libstdc++6 \
     libssl3 \
     libmariadb3 \
+    ca-certificates \
+    && update-ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app

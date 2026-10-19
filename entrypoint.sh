@@ -68,6 +68,10 @@ set_ini_value Database DatabaseName "$MV_DB_NAME"
 set_ini_value Database Username "$MV_DB_USER"
 set_ini_value Database PasswordEnvironmentName "$MV_DB_PASSWORD_ENV"
 
+set_ini_value General SmtpServer "$MV_SMTP_SERVER"
+set_ini_value General EmailSender "$MV_EMAIL_SENDER"
+set_ini_value General EmailUsername "$MV_EMAIL_USERNAME"
+
 # If the password env var is not present, warn (DB may still start with defaults).
 if [[ -z "${!MV_DB_PASSWORD_ENV:-}" ]]; then
   echo "Warning: environment variable '$MV_DB_PASSWORD_ENV' is not set." >&2

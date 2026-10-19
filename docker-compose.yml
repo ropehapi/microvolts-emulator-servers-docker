@@ -3,6 +3,10 @@ x-server-environment: &server-environment
   MV_JWT: ${MV_JWT:-local-development-jwt-token}
   MVEMAIL_SECRET: ${MVEMAIL_SECRET:-0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef}
   MV2FA_SECRET: ${MV2FA_SECRET:-abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789}
+
+  MV_SMTP_SERVER: ${MV_SMTP_SERVER}
+  MV_EMAIL_SENDER: ${MV_EMAIL_SENDER}
+  MV_EMAIL_USERNAME: ${MV_EMAIL_USERNAME}
   MV_EMAIL_TOKEN: ${MV_EMAIL_TOKEN:-local-development-email-token}
 
 services:
