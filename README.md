@@ -7,16 +7,24 @@ A complete Docker-based setup for running the Microvolts Emulator servers on Lin
 Get the Microvolts Emulator running in minutes:
 
 ```bash
-git clone https://github.com/ToyBattles/MicroVolts-Server-Docker.git
-cd MicroVolts-Server-Docker
+# Start an SSH agent and load a GitHub-authorized key
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+ssh -T git@github.com
+
+# Clone the Docker setup
+git clone git@github.com:ropehapi/microvolts-emulator-servers-docker.git
+cd microvolts-emulator-servers-docker
+
+# Create the local environment file and define the variables
+cp .env.example .env
 
 ./setup.sh --db-password-env MY_DB_PASSWORD
 
-export MY_DB_PASSWORD=your_secure_password_here
+# Preserve the SSH agent because the build clones the private server repository
+sudo --preserve-env=SSH_AUTH_SOCK docker compose up --build -d
 
-docker-compose up --build -d
-
-docker-compose ps
+sudo docker compose ps
 ```
 
 That's it! Your Microvolts Emulator is now running with:
@@ -31,6 +39,8 @@ That's it! Your Microvolts Emulator is now running with:
 - **Linux** environment (Ubuntu/Debian recommended)
 - **4GB+ RAM** available
 - **Git** for repository access
+- **OpenSSH client** and an SSH key authorized on GitHub
+- Access to the private `ropehapi/microvolts-emulator-servers` repository
 
 ## Support & Community
 
