@@ -7,7 +7,7 @@ SUDO ?= sudo --preserve-env=SSH_AUTH_SOCK
 COMPOSE ?= $(SUDO) $(DOCKER) compose
 SETUP_ARGS ?= --db-password-env MY_DB_PASSWORD
 
-.PHONY: help check setup run build stop restart status logs check-env check-ssh
+.PHONY: help check setup up down build restart status logs repair-rewards check-env check-ssh
 
 help: ## Show the available commands
 	@printf '%s\n' \
@@ -15,14 +15,15 @@ help: ## Show the available commands
 		'' \
 		'Commands:' \
 		'  setup    Create .env (if needed) and configure Docker Compose' \
-		'  run      Build and start all services in the background' \
+		'  up       Build and start all services in the background' \
 		'  build    Build the service images' \
-		'  stop     Stop and remove the service containers' \
+		'  down     Stop and remove the service containers' \
 		'  restart  Restart all services' \
+		'  repair-rewards  Remove invalid reward entries so they are regenerated' \
 		'  status   Show the service status' \
 		'  logs     Follow logs from all services' \
 		'' \
-		'If Docker does not require sudo, append SUDO= (for example: make run SUDO=).'
+		'If Docker does not require sudo, append SUDO= (for example: make up SUDO=).'
 
 check:
 	@command -v $(DOCKER) >/dev/null 2>&1 || { echo 'Docker is not installed or is not in PATH.' >&2; exit 1; }
@@ -41,7 +42,7 @@ check-env:
 	@test -f .env || { echo 'Missing .env file. Run make setup first.' >&2; exit 1; }
 
 check-ssh:
-	@test -n "$$SSH_AUTH_SOCK" && test -S "$$SSH_AUTH_SOCK" || { echo 'No SSH agent found. Start one and add your GitHub key before running make run.' >&2; exit 1; }
+	@test -n "$$SSH_AUTH_SOCK" && test -S "$$SSH_AUTH_SOCK" || { echo 'No SSH agent found. Start one and add your GitHub key before running make up.' >&2; exit 1; }
 	@ssh-add -l >/dev/null 2>&1 || { echo 'The SSH agent has no key loaded. Run ssh-add with your GitHub key.' >&2; exit 1; }
 
 up: check check-env check-ssh ## Build and start all services

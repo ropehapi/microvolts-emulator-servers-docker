@@ -75,6 +75,7 @@ COPY --from=builder /app/Output/ /app/Output/
 COPY --from=builder /app/Setup/ /app/Setup/
 COPY --from=builder /app/ExternalLibraries/cgd_original/ /app/ExternalLibraries/cgd_original/
 COPY --from=builder /app/microvolts-db.sql /app/
+COPY --from=builder /app/RewardItemIDs.txt /app/RewardItemIDs.txt
 
 # Runtime entrypoint patches config.ini based on environment variables.
 COPY entrypoint.sh /app/entrypoint.sh
